@@ -1,0 +1,347 @@
+---
+title: "MPA - UNIFEI"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::material:
+    highlight: kate
+---
+
+  
+```{r setup, include = FALSE}
+
+# Pacotes Importantes:
+
+library(knitr)
+library(rmdformats)
+
+# Opções Globais:
+
+options(max.print="75")
+
+opts_chunk$set(echo=FALSE,
+               cache=TRUE,
+               prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+
+opts_knit$set(width=75)
+
+```
+
+
+```{css}
+
+.header-panel{
+background-color: #222222;
+}
+
+
+.pages h1 {
+    font-family: Montserrat,Helvetica,Arial,sans-serif;
+    font-weight: bold;
+    color: #4f4f4f;
+}
+
+
+.menu ul li.active {
+    background-color: #fff952;
+    position: relative;
+    font-weight: bold;
+}
+
+
+a:hover {
+    text-decoration: none;
+    background-color: #fff952;
+    font-weight: bold;
+}
+
+.menu ul li {
+    list-style: none;
+    padding: 20px 0 20px 50px;
+    font-size: 15px;
+    font-weight: normal;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+```
+
+
+
+# {-}
+
+```{r, fig.align ='center', out.width = '75%'}
+
+knitr::include_graphics('../divulgacao/capa.png')
+
+```
+
+
+# SOBRE O CURSO
+
+***
+
+
+Define-se por análise bibliométrica um conjunto de procedimentos sistemáticos e 
+rigorosos de exploração de um grande volume de metadados científicos trata-se,
+portanto, de uma das aplicações possíveis da área de Ciência de Dados. Você sabia 
+que as publicações de artigos contendo análises bibliométricas estão crescendo 
+de maneira acelerada em todo o mundo? Em números, tem-se uma média de crescimento
+anual de cerca de **30,65%** ao considerarmos, por exemplo, a base de dados Web 
+of Science (WoS) entre os anos de 2010 a 2020. Este movimento pode ser observado
+no gif abaixo, organizado a partir de artigos publicados apenas em periódicos
+científicos e na língua inglesa.
+
+
+```{r, echo=FALSE, fig.align ='center', out.width = '50%'}
+
+
+library(magrittr, include.only = '%>%')
+
+
+serie_temporal <- readxl::read_xlsx('../dados/crescimento.xlsx')
+
+
+graf <- serie_temporal %>%
+  ggplot2::ggplot() +
+  ggplot2::geom_line(mapping = ggplot2::aes(x = Anos,
+                                            y = Artigos),
+                     color = '#fff952',
+                     size = 1) +
+  ggplot2::geom_point(mapping = ggplot2::aes(x = Anos,
+                                             y = Artigos),
+                      color = '#fff952',
+                      size = 2) +
+  ggplot2::geom_text(mapping = ggplot2::aes(x = Anos,
+                                            y = Artigos,
+                                            label = paste0(Artigos)),
+                     color = '#fff952',
+                     size = 5,
+                     nudge_x = 7,
+                     nudge_y = 7) +
+  ggplot2::theme(legend.position = 'none') +
+  ggplot2::labs(title =
+                  'Quantidade de Publicações de Artigos Bibliométricos ',
+                subtitle =
+                  '(Base: Web os Science)') + 
+  ggplot2::theme_dark()
+
+
+graf_animation <- graf +
+  gganimate::transition_reveal(Anos)
+
+
+graf_animation
+
+```
+
+
+Uma série de fatores associados podem explicar a referida tendência de 
+crescimento das publicações. Por um lado, pode-se observar uma melhora das bases
+de metadados científicos (SCOPUS e WoS), de outro lado, uma série de softwares 
+comerciais estão sendo desenvolvidos com a finalidade de implementar estas 
+análises. Este cenário vem facilitando cada vez mais o acesso de 
+pesquisador\@s das mais diversas áreas e a utilização destes estudos por 
+laboratórios de pesquisa, universidades, editor\@s de periódicos e até mesmo 
+governos.
+
+
+Dentre os referidos softwares pode-se apontar como destaque o R, mais 
+especificamente, o seu pacote de análise bibliométrica chamado 
+[**bibliometrix**](https://www.bibliometrix.org/). Este pacote foi desenvolvido 
+ recentemente por Massimo Aria e Corrado Cuccurullo e, portanto, todo o seu 
+potencial ainda não foi explorado pela literatura científica (para se ter uma 
+boa noção do potencial do bibliometrix basta avaliar o 
+[**artigo**](https://www.sciencedirect.com/science/article/pii/S1751157717300500)
+dos seus desenvolvedores publicado no *Journal of Informetrics*).
+
+
+Por sua vez, é possível levantar uma série de fatores que corroboram ao 
+entendimento de que a utilização da linguagem R para implementação de análises 
+bibliométricas se destaca frente a outros softwares.
+
+
+- **Para pesquisadores habituados à programação**
+
+  - Linguagem criada e mantida por estatísticos, em um projeto *open-source*, com o 
+  fornecimento de uma ampla gama de ferramentas estatísticas (algoritmos já
+  implementados!). Se existe uma técnica estatística, ela já foi implementada 
+  em R;
+  
+  - Comunidade ativa de pesquisadores debatendo avanços em diversos fóruns e, ao 
+  mesmo passo, auxiliando em implementações diversas de maneira colaborativa 
+  (de modo a integrar cientistas em todo o mundo);
+  
+  - Promoção de pesquisas reprodutíveis, abertas e acessíveis;
+  
+  - Abrange todas as etapas da ciência de dados (importação de dados, arrumação
+  dos dados, transformação dos dados, visualização e modelagem dos dados, 
+  reportação e reprodução das análises). Por exemplo, esta página web do curso 
+  foi desenvolvida em linguagem R (módulo de reportação permite o 
+  desenvolvimento de documentos dinâmicos, blogs, sites, aplicativos).
+  
+- **Para pesquisadores não habituados à programação**
+
+  - Linguagem acessível a não programadores;
+  
+  - O pacote bibliometrix possui uma interface gráfica de modo que todos possam 
+  calcular e analisar diversos indicadores bibliométricos sem ter que escrever 
+  uma linha sequer de programação.
+
+
+## Objetivo do Curso
+
+
+Assim, este curso foi criado visando "capturar" esta tendência de crescimento de 
+publicações de análises bibliométricas a partir de uma das ferramentas mais 
+poderosas (mais uma vez, o pacote bibliometrix do R). De maneira formal, o 
+presente curso tem por objetivo geral realizar um treinamento em programação na 
+linguagem R com foco na implementação de análises bibliométricas a partir do 
+pacote Bibliometrix. O treinamento deverá ser realizado para discentes de 
+programas de pós-graduação da UNIFEI e, também, de outras instituições.
+
+
+Deste modo, o treinamento foi estruturado nas seguintes etapas:
+
+- Guia de instalação do software R e da IDE RSTUDIO.
+
+- Guia de instalação do pacote Bibliometrix.
+
+- Guia de como pesquisar e exportar metadados de bases científicas (SCOPUS e 
+Web of Science).
+
+- Como carregar a aplicação web Biblioshiny do pacote Bibliometrix?
+
+- Como importar os metadados para a aplicação web Biblioshiny do pacote 
+Bibliometrix?
+
+- Como calcular e interpretar indicadores bibliométricos a partir da aplicação
+web Biblioshiny?
+
+- Introdução à relatórios bibliométricos reprodutíveis no R.
+
+
+# INSCRIÇÕES
+
+
+***
+
+
+A finalidade última da análise bibliométrica não está no mapeamento científico
+*per se*, mas na divulgação científica, no acesso das pessoas, d\@s pesquisador\@s, 
+de laboratórios, universidades, editoras, governos, à estruturação da visão 
+científica sobre determinado tema. No mesmo sentido, o presente curso tem 
+por finalidade última o **acesso** (seja bem vind\@ ao engajamento da comunidade
+R). 
+
+
+Assim, nesta edição tod\@s podem participar do curso! O treinamento será realizado 
+em ambiente virtual (a partir da plataforma google meet) e de maneira síncrona. 
+As datas e links são disponibilizadas abaixo:
+
+
+- **Análise Bibliométrica com R - Parte I**
+  - Terça-feira, 23 de novembro (21:00 até 22:30);
+  - Link da videochamada: [**clique aqui**](https://meet.google.com/fjg-padb-yvn).
+
+- **Análise Bibliométrica com R - Parte II**
+  - Quinta-feira, 25 de novembro (19:00 até 21:00)
+  - Link da videochamada: [**clique aqui**](https://meet.google.com/wqu-gjss-wpq).
+  
+  
+Não há qualquer pré-requisito para participação do treinamento (você não precisa
+ter nenhuma familiaridade com a linguagem R), de fato, você apenas precisará ter um 
+computador disponível e, obviamente, acesso à internet. Além disso, é relevante 
+que você já tenha o R instalado antes do início do treinamento e, 
+preferencialmente, também já tenha uma base de dados relacionada ao seu tema 
+já preparada para análise. 
+
+
+Fique tranquil\@ em relação a instalação do R e a preparação da base de dados, nós
+preparamos vídeos para vocês sobre o tema e eles serão disponibilizados na seção 
+[**ESTAÇÃO DE TRABALHO**](#r_rstudio) deste documento. É importante ressaltar que 
+estes vídeos serão disponibilizados no dia 22 de novembro (segunda-feira) para 
+que você já chegue com tudo pronto para o primeiro dia de treinamento (fique 
+atent\@).
+
+
+No entanto, é muito relevante realizar a inscrição para que possamos, nos 
+comunicar, compreender a relevância do curso, aproximar à comunidade, ofertar 
+outros treinamentos, enfim, para viabilizar a organização por parte da nossa 
+equipe. Para tanto, basta preencher um rápido formulário (disponibilizado 
+abaixo). Será assegurado um certificado de participação para tod\@s os 
+participantes inscrit\@s.
+
+
+***
+
+- **COMUNIDADE UNIFEI (ESTUDANTES, SERVIDORES, DOCENTES)**:
+
+  - Caso você faça parte da comunidade UNIFEI, acesse o formulário de inscrição
+  [**CLICANDO AQUI**](https://forms.gle/LyuirCBywf7NeTTF6)!
+
+
+***
+
+
+- **COMUNIDADE EXTERNA**:
+
+  - Caso você não faça parte da comunidade UNIFEI, faça o seu cadastro no SIGAA primeiro.
+  Basta clicar em **_"Ainda não possuo cadastro"_** depois de
+  [**CLICAR AQUI**](https://sigaa.unifei.edu.br/sigaa/public/extensao/loginCursosEventosExtensao.jsf) 
+  ,então, preencha os dados solicitados! 
+  Após cadastro no SIGAA, envie um e-mail para **victor.dmv@unifei.edu.br** 
+  avisando que você pretende participar do curso!
+
+
+***
+
+
+# ESTAÇÃO DE TRABALHO {#r_rstudio}
+
+
+Para preparar a nossa estação de trabalho são necessárias duas etapas. Em 
+primeiro lugar, todos os softwares e pacotes necessários à implementação da 
+análise bibliométrica deverão ser instalados. Em seguida, a base de dados, isto 
+é, a amostra de metadados científicos deve ser adequadamente preparada de modo a
+viabilizar resultados consistentes. Assim, esta seção foi organizada com esta 
+finalidade!
+
+
+A etapa de instalação é bem simples, de fato, poucos passos são necessários. O 
+vídeo explicando a instalação pode ser acessado 
+[**CLICANDO AQUI**](https://youtu.be/qrkF-mao7pc)! Ao acompanhar o video você 
+compreenderá como instalar o R, RStudio e, além disso, como instalar o pacote 
+bibliometrix dentro da sessão do R. Os links comentados no vídeo são 
+disponibilizados a seguir:
+
+- Instalação do R: [**LINK**](https://cran-r.c3sl.ufpr.br/)
+
+- Instalação do RStudio: [**LINK**](https://www.rstudio.com/products/rstudio/download/#download)
+
+
+Por sua vez, se você se interessou pelo curso provavelmente está engajado de 
+alguma maneira à atividade de pesquisa e, portanto, já está habituado a buscar 
+artigos científicos que tratam do seu tema de interesse e que estão disponíveis
+nas melhores bases de dados (por exemplo, Web of Science e SCOPUS). De todo 
+modo, é necessário compreender como preparar estes dados (ou melhor, metadados) 
+de modo a viabilizar a implementação da análise bibliométrica. 
+
+O vídeo sobre a preparação da base de dados estará disponível até as 18h de hoje
+(**`r Sys.Date()`**).
+
+
+***
+
+
+# AULAS
+
+
+***
+
+
+
