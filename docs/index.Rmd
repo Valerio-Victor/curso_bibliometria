@@ -351,8 +351,25 @@ Em associação, o link para acesso ao portal da CAPES é disponibilizado a segu
 
 ## PRIMEIRA APRESENTAÇÃO DO CURSO
 
+
 - Para acessar o video da primeira apresentação basta 
 [**CLICAR AQUI**](https://youtu.be/1vH-6jse1Ro).
+
+
+## SEGUNDA APRESENTAÇÃO DO CURSO
+
+
+- Para acessar o video da segunda apresentação basta 
+[**CLICAR AQUI**](https://youtu.be/yPlfpJMUtR8).
+
+
+
+## ACESSO AO APLICATIVO
+
+
+Para acessar o aplicativo desenvolvido com a finalidade de agrupar os metadados
+científicos da SCOPUS e da Web of Science (WoS), basta 
+[**CLICAR AQUI**](https://profvictorunifei.shinyapps.io/app_bibliometria/).
 
 
 ***

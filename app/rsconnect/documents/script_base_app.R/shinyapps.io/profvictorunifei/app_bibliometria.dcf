@@ -1,0 +1,13 @@
+name: app_bibliometria
+title: app_bibliometria
+username:
+account: profvictorunifei
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5205513
+bundleId: 5293492
+url: https://profvictorunifei.shinyapps.io/app_bibliometria/
+when: 1637861925.07447
+lastSyncTime: 1637861925.07447
+asMultiple: FALSE
+asStatic: FALSE
